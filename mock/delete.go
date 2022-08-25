@@ -24,7 +24,7 @@ func NewDeleteService() DeleteService {
 	}
 }
 
-//DeleteBucketRangePredicate calls DeleteBucketRangePredicateF.
+// DeleteBucketRangePredicate calls DeleteBucketRangePredicateF.
 func (s DeleteService) DeleteBucketRangePredicate(ctx context.Context, orgID, bucketID platform.ID, min, max int64, pred influxdb.Predicate) error {
 	return s.DeleteBucketRangePredicateF(ctx, orgID, bucketID, min, max, pred)
 }
