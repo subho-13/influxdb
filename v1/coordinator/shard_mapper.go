@@ -75,10 +75,13 @@ func (e *LocalShardMapper) mapShards(ctx context.Context, a *LocalShardMapping, 
 					return fmt.Errorf("retention policy not found: %s", s.RetentionPolicy)
 				} else if len(mappings) != 1 {
 					if len(mappings) == 2 {
-						if mappings[0].Database == mappings[1].Database {
+						if mappings[0].Database != mappings[1].Database {
+							str := "finding DBRP mappings: found mismatched virtual and physical %s - %s"
+							return fmt.Errorf(str, mappings[0].Database, mappings[1].Database)
 						}
+					} else {
+						return fmt.Errorf("finding DBRP mappings: expected 1, found %d", len(mappings))
 					}
-					// return fmt.Errorf("finding DBRP mappings: expected 1, found %d", len(mappings))
 				}
 
 				mapping := mappings[0]
