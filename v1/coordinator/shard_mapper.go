@@ -3,7 +3,6 @@ package coordinator
 import (
 	"context"
 	"fmt"
-	"github.com/influxdata/influx-cli/v2/api"
 	"io"
 	"time"
 
@@ -67,14 +66,19 @@ func (e *LocalShardMapper) mapShards(ctx context.Context, a *LocalShardMapping, 
 					OrgID:           &orgID,
 					Database:        &s.Database,
 					RetentionPolicy: &s.RetentionPolicy,
-					Virtual:         api.PtrBool(false),
+					//Virtual:         api.PtrBool(false),
+					Virtual: nil,
 				})
 				if err != nil {
 					return fmt.Errorf("finding DBRP mappings: %v", err)
 				} else if len(mappings) == 0 {
 					return fmt.Errorf("retention policy not found: %s", s.RetentionPolicy)
 				} else if len(mappings) != 1 {
-					return fmt.Errorf("finding DBRP mappings: expected 1, found %d", len(mappings))
+					if len(mappings) == 2 {
+						if mappings[0].Database == mappings[1].Database {
+						}
+					}
+					// return fmt.Errorf("finding DBRP mappings: expected 1, found %d", len(mappings))
 				}
 
 				mapping := mappings[0]
