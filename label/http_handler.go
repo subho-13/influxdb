@@ -80,6 +80,7 @@ func (h *LabelEmbeddedHandler) handlePostLabelMapping(w http.ResponseWriter, r *
 			Code: errors.EInvalid,
 			Msg:  "Invalid post label map request",
 		})
+		return
 	}
 
 	mapping.ResourceID = *embeddedID
